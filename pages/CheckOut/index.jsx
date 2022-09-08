@@ -96,16 +96,16 @@ const CheckOut = ({orderdata}) => {
             <input name="price" type="hidden" value={totalPrice} id='price' onChange={onChange} />
             <input name="product" type="hidden" value={products} id='product' onChange={onChange}/>
               <div className='form-container'>
-                <input  name="namee" placeholder="name" type="text" id='from_name' onChange={onChange} errorMessage="โปรดใส่ชื่อ"/>
+                <input  name="namee" placeholder="name" type="text" id='from_name' onChange={onChange}/>
               </div>
               <div className='form-container'>
-                <input name="email" placeholder="email" type="email" id='email' onChange={onChange} errorMessage="โปรดใส่อีเมล"/>
+                <input name="email" placeholder="email" type="email" id='email' onChange={onChange} />
               </div>
               <div className='form-container'>
-                <input name="phonenumber" placeholder="Phone" type="text" id='phonenum' onChange={onChange} errorMessage="โปรดใส่เบอร์โทร"/>
+                <input name="phonenumber" placeholder="Phone" type="text" id='phonenum' onChange={onChange} />
               </div>
               <div className='form-container'>
-                <textarea name="address" placeholder="address" id='address' onChange={onChange} errorMessage="โปรดใส่ที่อยู่" />
+                <textarea name="address" placeholder="address" id='address' onChange={onChange} />
               </div>  
               <div className='form-submit'>
                   <input type="submit" value="send"  />
