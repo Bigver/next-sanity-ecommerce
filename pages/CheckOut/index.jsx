@@ -1,4 +1,4 @@
-import React , { useRef }from 'react'
+import React , { useRef , useState }from 'react'
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineShopping } from 'react-icons/ai';
 import { useStateContext } from '../../context/StateContext';
@@ -6,25 +6,16 @@ import { urlFor , client } from '../../lib/client';
 import emailjs from '@emailjs/browser';
 import Link from 'next/link';
 
-interface IFormInput {
-  name: string;
-  product: string;
-  price: string;
-  namee: string;
-  email: string;
-  phonenumber: string;
-  address: string;
-  productNumber: any;
-}
+
 
 
 
 const CheckOut = ({orderdata}) => {
   const form = useRef();
   const { totalPrice,  cartItems,  toggleCartItemQuanitity } = useStateContext();
-  const { register, handleSubmit,  formState: { errors } } = useForm<IFormInput>();
   let products = "";
   let IdProduct = [];
+  let StrIdProduct = "";
   const numorder = orderdata.length +1
   const order = "orderที่ :" + numorder
   cartItems.map((item) =>(
@@ -33,10 +24,29 @@ const CheckOut = ({orderdata}) => {
   cartItems.map((item) =>(
     IdProduct.push(item._id)
   ))
-
+  if (IdProduct.length>1){
+    for(let i=0 ; i<IdProduct.length;i++){
+      StrIdProduct = StrIdProduct + IdProduct[i] + ","
+      if (i===IdProduct.length-1){
+        StrIdProduct = StrIdProduct.slice(0, -1);
+      }
+    }
+  }else{
+    StrIdProduct = IdProduct[0]
+  }
+  const [values, setValues] = useState({
+    name: order,
+    product: products,
+    price: totalPrice.toString(),
+    namee: "namee",
+    email: "email",
+    phonenumber: "phonenumber",
+    address: "address",
+    productNumber: StrIdProduct,
+  });
   
 
-  const onSubmit: SubmitHandler<IFormInput> = async (data,e) =>{
+  const handleSubmit = async (e) =>{
     e.preventDefault();
     emailjs.sendForm("service_vdelpzh","template_gt12oka", form.current,"-FQ5DuKGH9jhs2k1V")
       .then((result) => {
@@ -44,19 +54,20 @@ const CheckOut = ({orderdata}) => {
       }, (error) => {
           console.log("ส่งemailไม่สำเร็จ");
       });
+    console.log(values)
     fetch('/api/buyproduct', {
       method: 'POST',
-      body: JSON.stringify(data),
-
+      body: JSON.stringify(values),
     }).then(() => {
       window.location.href = '/ContactUs';
     }).catch((err) => {
       console.log(err)
     })
   };
-
+  const onChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
   return (
-
     <div className='container-checkout'>
       <div className='container-form' >
         <div className='container-info' >
@@ -79,25 +90,23 @@ const CheckOut = ({orderdata}) => {
         </div>
         <div className='container-formsub' >
           <span>สั่งซื้อสินค้า</span>
-          <form className='form'  onSubmit={handleSubmit(onSubmit)} ref={form}   >
-            <input {...register("name",{required :true})}  type="hidden" value={order} id='_id' />
-            <input {...register("productNumber",{required :true})}  type="hidden" value={IdProduct} />
-            <input {...register("price",{required :true})}  type="hidden" value={totalPrice} id='price' />
-            <input {...register("product",{required :true})}  type="hidden" value={products} id='product'/>
-            <input {...register("product",{required :true})}  type="hidden" value={products} id='product'/>
+          <form className='form'  onSubmit={handleSubmit} ref={form}   >
+            <input name="name"  type="hidden" value={order} id='_id' onChange={onChange} />
+            <input name="productNumber" type="hidden" value={IdProduct} onChange={onChange} />
+            <input name="price" type="hidden" value={totalPrice} id='price' onChange={onChange} />
+            <input name="product" type="hidden" value={products} id='product' onChange={onChange}/>
               <div className='form-container'>
-                <input {...register("namee",{required :true})} placeholder="name" type="text" id='from_name'/>
+                <input  name="namee" placeholder="name" type="text" id='from_name' onChange={onChange} errorMessage="โปรดใส่ชื่อ"/>
               </div>
               <div className='form-container'>
-                <input {...register("email",{required :true})} placeholder="email" type="email" id='email' />
+                <input name="email" placeholder="email" type="email" id='email' onChange={onChange} errorMessage="โปรดใส่อีเมล"/>
               </div>
               <div className='form-container'>
-                <input {...register("phonenumber",{required :true})} placeholder="Phone" type="text" id='phonenum' />
+                <input name="phonenumber" placeholder="Phone" type="text" id='phonenum' onChange={onChange} errorMessage="โปรดใส่เบอร์โทร"/>
               </div>
               <div className='form-container'>
-                <textarea {...register("address",{required :true})} placeholder="address" id='address'/>
+                <textarea name="address" placeholder="address" id='address' onChange={onChange} errorMessage="โปรดใส่ที่อยู่" />
               </div>  
-              
               <div className='form-submit'>
                   <input type="submit" value="send"  />
               </div>

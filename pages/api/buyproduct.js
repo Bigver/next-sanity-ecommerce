@@ -1,9 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from "next"
 import sanityClient from '@sanity/client';
 
-interface MulterRequest extends Request {
-    file: any;
-}
 
 const client = sanityClient({
     projectId: '2rca07ul',
@@ -18,7 +14,7 @@ const client = sanityClient({
 
 
 export default async function buyproduct(
-    req: NextApiRequest, res: NextApiResponse): Promise<any>{
+    req, res){
     const {name,product,price,namee,email,phonenumber,address,productNumber} = JSON.parse(req.body);
     try {
         await client.create({
