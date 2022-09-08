@@ -1,6 +1,4 @@
 import React , { useRef , useState }from 'react'
-import { SubmitHandler, useForm } from "react-hook-form";
-import { AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineShopping } from 'react-icons/ai';
 import { useStateContext } from '../../context/StateContext';
 import { urlFor , client } from '../../lib/client';
 import emailjs from '@emailjs/browser';
@@ -129,4 +127,3 @@ export const getServerSideProps = async () => {
 export default CheckOut
 
 
-// service_vdelpzh

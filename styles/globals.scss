@@ -956,17 +956,26 @@ margin-top: 160px;
     border-radius: 30px;
     display: grid;
     justify-content: center;
+    align-items: center;
+    text-align: center;
     h1{
       padding-top: 50px;
       font-size: 2vh;
       font-family: 'Josefin Sans', sans-serif;
     }
-    img{
+    .container-img
+    {  position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      img{
       width: 10vh;
       height: 10vh;
       background-color: rgb(157, 226, 157);
       border-radius: 50%;
-    }
+    }}
+ 
   }
 }
 
