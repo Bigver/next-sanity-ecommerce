@@ -23,7 +23,7 @@ const Home = ({ products, bannerData , order}) => {
   }
   return (
     <div>
-      <Show />
+      <Show bannerData={bannerData} key={bannerData._id}/>
       <div className="products-container">
         {products?.map((product) => <Product key={product._id} product={product} order={SoldOut} />)}
       </div>
