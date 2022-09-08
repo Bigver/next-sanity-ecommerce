@@ -88,11 +88,11 @@ const Cart = () => {
               <h3>{totalPrice}&#3647;</h3>
             </div>
             <div className="btn-container">
-              {/* <Link href="/CheckOut">
+              <Link href="/CheckOut">
                 <button type="button" className="btn" onClick="">
                   จ่ายเงิน
                 </button>
-              </Link> */}
+              </Link>
             </div>
           </div>
         )}
