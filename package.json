@@ -19,6 +19,7 @@
     "react-hook-form": "^7.34.2",
     "react-hot-toast": "^2.3.0",
     "react-icons": "^4.4.0",
+    "react-messenger-customer-chat": "^0.8.0",
     "sass": "^1.54.9"
   },
   "devDependencies": {
